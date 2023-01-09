@@ -15,3 +15,18 @@ export async function insertQuestions(req, res) {
 export async function dropQuestions(req, res) {
     res.json("questions api delete requests");
 }
+
+// Get all results
+export async function getResults(req, res) {
+    res.json("results api get results");
+}
+
+// post all results
+export async function storeResults(req, res) {
+    res.json("result api post results");
+}
+
+// delete all results
+export async function dropResults(req, res) {
+    res.json("result api delete results");
+}
