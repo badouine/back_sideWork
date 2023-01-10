@@ -1,14 +1,27 @@
 import { request } from "express";
-
+import Questions from "../models/questionSchema.js";
+import Results from "../models/resultSchema.js";
 
 // get all questions
 export async function getQuestions(req, res) {
-    res.json("questions api get requests");
+    try {
+        const q = await Questions.find()
+        res.json(q)
+    } catch (error) {
+        res.json({ error })
+    }
 }
 
-// insert a all questions
+
+// insert  all questions
 export async function insertQuestions(req, res) {
-    res.json("questions api post requests");
+    try {
+        Questions.insertMany({ questions: [0], answers: [1], function(err, data) {
+            res.json({msg: "Data Saved Successfully ...!"})
+        } })
+    } catch (error) {
+        res.json({ error })
+    }
 }
 
 // Delete all questions
