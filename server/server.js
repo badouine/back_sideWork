@@ -5,6 +5,9 @@ import cors from 'cors';
 import router from './router/route.js';
 const app = express();
 
+// import connection file
+import connect from './database/conn.js';
+
 // app middlewares
 app.use(morgan('tiny'));
 app.use(cors());
@@ -24,6 +27,15 @@ app.get('/', (req, res) => {
 }
 )
 
-app.listen(port, () => {
-    console.log(`Server connected to http://localhost:${port}`)
+// start server only when we have valid connection
+connect().then(() => {
+    try {
+            app.listen(port, () => {
+                console.log(`Server connected to http://localhost:${port} `)
+            })
+    } catch(err) {
+        console.log(`Cannot connect to the server`)
+    }
+}).catch(err => {
+    console.log("Invalid DB connection" )
 })
