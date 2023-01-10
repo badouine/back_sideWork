@@ -1,6 +1,7 @@
 import { request } from "express";
 import Questions from "../models/questionSchema.js";
 import Results from "../models/resultSchema.js";
+import questions, { answers } from "../database/data.js";
 
 // get all questions
 export async function getQuestions(req, res) {
@@ -16,9 +17,9 @@ export async function getQuestions(req, res) {
 // insert  all questions
 export async function insertQuestions(req, res) {
     try {
-        Questions.insertMany({ questions: [0], answers: [1], function(err, data) {
+        Questions.insertMany({ questions, answers }, function(err, data) {
             res.json({msg: "Data Saved Successfully ...!"})
-        } })
+        })
     } catch (error) {
         res.json({ error })
     }
