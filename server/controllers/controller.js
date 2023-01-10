@@ -27,20 +27,44 @@ export async function insertQuestions(req, res) {
 
 // Delete all questions
 export async function dropQuestions(req, res) {
-    res.json("questions api delete requests");
+    try {
+        await Questions.deleteMany();
+        res.json({ msg: "Questions deleted successfully"})
+    }catch(error) {
+        res.json({ error })
+    }
 }
 
 // Get all results
 export async function getResults(req, res) {
-    res.json("results api get results");
+    try {
+        const r = await Results.find()
+        res.json(r)
+    }catch (error) {
+    res.json( {error} )
+    }
 }
 
 // post all results
 export async function storeResults(req, res) {
-    res.json("result api post results");
+    try {
+        const { username, result, attempts, points, achived } = req.body;
+            if(!username && !result) throw new Error('Data not provided');
+
+        Results.create({ username, result, attempts, points, achived }, function(err, data) {
+            res.json({ msg: "result saved successfully"})
+        })
+    }catch (error) {
+        res.json( {error} )
+    }
 }
 
 // delete all results
 export async function dropResults(req, res) {
-    res.json("result api delete results");
+    try {
+        await Results.deleteMany();
+        res.json({ msg: "result deleted successfully"})
+    } catch (error) {
+        res.json( {error} )
+    }
 }
